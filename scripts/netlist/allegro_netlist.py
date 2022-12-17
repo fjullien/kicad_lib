@@ -315,6 +315,14 @@ for grp in component_groups:
     footprint = (grp[0].getFootprint() or default_footprint).rpartition(':')[2]
     # Write out the chosen default footprint. Additional footprints are written
     # to the ALT_SYMBOLS property.
+
+    fields = libpart.element.getChild('fields')
+    if fields:
+      for field in fields.getChildren('field'):
+        if field.get("field", "name") == "AllegroFootprint":
+          print(field.get("field"))
+          footprint = field.get("field")
+
     d.write("PACKAGE '%s'\n" % format_dev(footprint))
     # Valid classes are IC, IO, and DISCRETE. This mainly seems to enable
     # filtering in Quickplace, and BGA Text Out (requires IO) when using APD.
